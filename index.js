@@ -6,7 +6,6 @@ app.get("/",(req,res) =>{
     res.send("Home Page!!")
 })
 
-
 app.get("/about",(req,res) =>{
     res.send("About Page!!")
 })
@@ -15,7 +14,12 @@ app.get("/contact",(req,res) =>{
     res.send("Contact Page!!")
 })
 
-
+app.get("/users",(req,res) =>{
+    res.json({
+        name: "John",
+        age: 35
+    })
+})
 
 app.listen(8080,()=>{
     console.log("Server Running...")
