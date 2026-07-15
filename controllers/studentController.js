@@ -25,7 +25,7 @@ const getStudents = async (req, res) => {
 
 //get all students by id
 
-const getStudentsById = async(req,res) =>{
+const getStudentsById = async (req, res) => {
     try {
         const student = await Student.findById(req.params.id)
         console.log(student)
@@ -68,8 +68,59 @@ const createStudents = async (req, res) => {
 }
 
 
+// Delete Student
+const deleteStudent = async (req, res) => {
+    try {
+        const student = await Student.findByIdAndDelete(req.params.id);
+
+        if (!student) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "Student Deleted Successfully"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+//Update student details
+const updateStudent = async (req, res) => {
+
+    const { name, age } = req.body
+
+    try {
+        const student = await Student.findByIdAndUpdate(req.params.id, req.body, {
+            returnDocument: "after"
+        })
+
+        if (!student) {
+            return res.status(404).json({
+                message: "Student not found"
+            });
+        }
+        res.status(200).json({
+            message: "Student Updated Successfully",
+            data: student
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+}
+
+
 module.exports = {
     getStudents,
     createStudents,
-    getStudentsById
+    getStudentsById,
+    updateStudent,
+    deleteStudent
 };
